@@ -1,14 +1,15 @@
 -- Initial
-DROP TABLE IF EXISTS numbers;
+DROP TABLE IF EXISTS students;
 
-CREATE TABLE IF NOT EXISTS numbers (
-    a int default 0,
-    b int default 0
+CREATE TABLE IF NOT EXISTS students (
+    name VARCHAR(255) NOT NULL,
+    score INT default 0,
+    last_meeting DATE NULL 
 );
 
-INSERT INTO numbers (a, b) VALUES (10, 2);
-INSERT INTO numbers (a, b) VALUES (4, 5);
-INSERT INTO numbers (a, b) VALUES (2, 3);
-INSERT INTO numbers (a, b) VALUES (6, 3);
-INSERT INTO numbers (a, b) VALUES (7, 0);
-INSERT INTO numbers (a, b) VALUES (6, 8);
+INSERT INTO students (name, score) VALUES ("Bob", 80);
+INSERT INTO students (name, score) VALUES ("Sylvia", 120);
+INSERT INTO students (name, score) VALUES ("Jean", 60);
+INSERT INTO students (name, score) VALUES ("Steeve", 50);
+INSERT INTO students (name, score) VALUES ("Camilia", 80);
+INSERT INTO students (name, score) VALUES ("Alexa", 130);
