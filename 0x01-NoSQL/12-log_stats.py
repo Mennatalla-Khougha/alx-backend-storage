@@ -5,15 +5,15 @@ from pymongo import MongoClient
 
 if __name__ == "__main__":
     client = MongoClient('mongodb://127.0.0.1:27017')
-    logs = client.logs.nginx
+    db = client.logs.nginx
 
-    print(f"{logs.count_documents({})} logs")
+    print(f"{db.count_documents({})} logs")
     print("Methods:")
 
-    methods = ["GET", "POST", "PUT", "PATCH", "DELETE"]
+    methods = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']
 
     for method in methods:
-        print(f"\tmethod{method}: {logs.count_documents({'method': method})}")
+        print(f"\tmethod {method}: {db.count_documents({'method': method})}")
 
-    status = logs.count_documents({"method": "GET", 'path': '/status'})
+    status = db.count_documents({'method': 'GET', 'path': '/status'})
     print(f"{status} status check")
