@@ -18,8 +18,9 @@ def url_count(method):
             return value.decode("utf-8")
 
         html = method(url)
-        red.set(f"count:{url}", 0)
-        red.setex(f"cached:{url}", 10, html)
+        red.set(f"cached:{url}", html)
+        red.expire(f"cached:{url}", 10)
+        # red.setex(f"cached:{url}", 10, html)
         return html
     return wrapper
 
