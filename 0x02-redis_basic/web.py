@@ -6,12 +6,14 @@ from functools import wraps
 from typing import Callable
 
 
+red = redis.Redis()
+
+
 def url_count(method: Callable) -> Callable:
     """
     Decorator that takes a single method Callable argument and returns
     a Callable
     """
-    red = redis.Redis()
 
     @wraps(method)
     def wrapper(url):
