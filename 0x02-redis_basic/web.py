@@ -8,21 +8,18 @@ red = redis.Redis()
 
 
 def url_count(method):
-    """decorator for get_page function"""
+    """Decorator for get_page function"""
     @wraps(method)
     def wrapper(url):
-        """wrapper function"""
-        key = "cached:" + url
-        value = red.get(key)
+        """Wrapper function"""
+        red.incr(f"count:{url}")
+        value = red.get(f"cached:{url}")
         if value:
             return value.decode("utf-8")
 
-        count = "count:" + url
         html = method(url)
 
-        red.incr(count)
-        red.set(key, html, ex=10)
-        red.expire(key, 10)
+        red.setex(f"cached:{url}", 10, html)
         return html
     return wrapper
 
