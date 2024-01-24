@@ -45,6 +45,36 @@ def call_history(method: Callable) -> Callable:
     return wrapper
 
 
+def replay(func: Callable) -> None:
+    """Display the history of calls of a particular function."""
+    red = redis.Redis()
+    name = func.__qualname__
+    value = red.get(name)
+
+    try:
+        value = int(value.decode("utf-8"))
+    except Exception:
+        value = 0
+
+    print(name, "was called", value, "times:")
+
+    input = red.lrange("{}:inputs".format(name), 0, -1)
+    output = red.lrange("{}:inputs".format(name), 0, -1)
+
+    for input, output in zip(input, output):
+        try:
+            input = input.decode("utf-8")
+        except Exception:
+            input = ""
+
+        try:
+            output = output.decode("utf-8")
+        except Exception:
+            output = ""
+
+        print("{}(*{}) -> {}".format(name, input, output))
+
+
 class Cache:
     """The `Cache` class is a Python class that provides a way to store data
     in a Redis cache and retrieve a unique key for the stored data."""
